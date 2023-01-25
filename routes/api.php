@@ -14,10 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/test', function (Request $request) {
-   return "test here";
+Route::get('/test', function () {
+    return ['data' => [1 => '1']];
 });
+
+Route::get('/latestWishlisted', [\App\Http\Controllers\WishlistItemController::class, 'index'] )->name('wishlistItem.index');
