@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class WishlistItemController extends Controller
 {
-    public function index()
+    public function index(): array|\Illuminate\Database\Eloquent\Collection
     {
         return WishlistItem::latest()->take(6)->get();
     }
