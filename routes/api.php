@@ -14,12 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::get('/test', function () {
-    return ['data' => [1 => '1']];
+//Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+Route::middleware(['auth:sanctum'])->group(function () {
+   Route::get('/user', function (Request $request) {
+       return $request->user();
+   });
+   Route::get('/user/items', function () {
+       return auth()->user()->wishlistItems;
+   });
 });
 
 Route::get('/latestWishlisted', [\App\Http\Controllers\WishlistItemController::class, 'index'] )->name('wishlistItem.index');
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    return "Cleared cache!";
+});
