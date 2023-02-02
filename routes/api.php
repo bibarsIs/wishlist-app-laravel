@@ -25,6 +25,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
        return auth()->user()->wishlistItems;
    });
 });
+Route::get('/check-login', function (Request $request) {
+    if ($request->user('sanctum')) {
+        return "true";
+    } else {
+        return "false";
+    }
+   });
 
 Route::get('/latestWishlisted', [\App\Http\Controllers\WishlistItemController::class, 'index'] )->name('wishlistItem.index');
 Route::get('/clear', function() {
